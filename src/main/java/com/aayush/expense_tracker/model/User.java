@@ -1,5 +1,6 @@
 package com.aayush.expense_tracker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class User {
     @Id
     @GeneratedValue(strategy =GenerationType.IDENTITY)
@@ -16,6 +18,7 @@ public class User {
     private String name;
     @Column (unique = true)
     private String email;
+    @JsonIgnore
     private String password;
 
 }
