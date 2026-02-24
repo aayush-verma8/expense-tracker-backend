@@ -24,4 +24,20 @@ public class ExpenseService {
         }
         expenseRepository.delete(expense);
     }
+    public Expense updateExpense(Long expenseId, Expense updatedExpense, User user) {
+
+        Expense existingExpense = expenseRepository.findById(expenseId)
+                .orElseThrow(() -> new RuntimeException("Expense not found"));
+
+        if (!existingExpense.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("Unauthorized to update this expense");
+        }
+
+        existingExpense.setAmount(updatedExpense.getAmount());
+        existingExpense.setCategory(updatedExpense.getCategory());
+        existingExpense.setDescription(updatedExpense.getDescription());
+        existingExpense.setDate(updatedExpense.getDate());
+
+        return expenseRepository.save(existingExpense);
+    }
 }

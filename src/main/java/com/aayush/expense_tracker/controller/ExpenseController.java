@@ -45,4 +45,13 @@ public class ExpenseController {
         expenseService.deleteExpense(id,user);
         return ResponseEntity.ok("Expense deleted successfully");
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Expense> updateExpense(
+            @PathVariable Long id,
+            @RequestBody Expense expense,
+            @RequestHeader("user-email") String email){
+        User user = userRepository.findByEmail(email).orElseThrow(()->new RuntimeException("User not found"));
+        Expense updated=expenseService.updateExpense(id,expense,user);
+        return ResponseEntity.ok(updated);
+    }
 }
