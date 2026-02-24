@@ -37,4 +37,12 @@ public class ExpenseController {
         List<Expense> expense=expenseService.getUserExpenses(user);
         return ResponseEntity.ok(expense);
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteExpense(
+            @PathVariable Long id,
+            @RequestHeader("user-email")String email){
+        User user = userRepository.findByEmail(email).orElseThrow(()->new RuntimeException("User not found"));
+        expenseService.deleteExpense(id,user);
+        return ResponseEntity.ok("Expense deleted successfully");
+    }
 }

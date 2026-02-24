@@ -17,4 +17,11 @@ public class ExpenseService {
     public List<Expense>getUserExpenses(User user){
         return expenseRepository.findByUser(user);
     }
+    public void deleteExpense(Long expenseId,User user){
+        Expense expense = expenseRepository.findById(expenseId).orElseThrow(()->new RuntimeException("Expense not found"));
+        if(!expense.getUser().getId().equals(user.getId())){
+            throw new RuntimeException("Unauthorized to delete this expense");
+        }
+        expenseRepository.delete(expense);
+    }
 }
