@@ -14,4 +14,7 @@ public class ExpenseService {
         expense.setUser(user);
         return expenseRepository.save(expense);
     }
+    public List<Expense>getUserExpenses(User user){
+        return expenseRepository.findByUser(user);
+    }
 }

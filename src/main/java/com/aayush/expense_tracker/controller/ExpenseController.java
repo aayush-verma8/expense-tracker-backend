@@ -5,6 +5,9 @@ import com.aayush.expense_tracker.model.Expense;
 import com.aayush.expense_tracker.service.ExpenseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/expenses")
 
@@ -26,5 +29,12 @@ public class ExpenseController {
         Expense savedExpense = expenseService.addExpense(expense, user);
 
         return ResponseEntity.status(201).body(savedExpense);
+    }
+    @GetMapping
+    public ResponseEntity<List<Expense>> getUserExpennses(
+            @RequestHeader("user-email") String email){
+        User user = userRepository.findByEmail(email).orElseThrow(()-> new RuntimeException("User not found"));
+        List<Expense> expense=expenseService.getUserExpenses(user);
+        return ResponseEntity.ok(expense);
     }
 }
