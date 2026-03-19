@@ -2,8 +2,10 @@ FROM openjdk:17
 
 WORKDIR /app
 
-# Copy all project files
 COPY . .
+
+# 🔥 ADD THIS LINE (IMPORTANT)
+RUN chmod +x mvnw
 
 # Build the project
 RUN ./mvnw clean package -DskipTests
