@@ -1,11 +1,10 @@
-FROM maven:3.9.9-eclipse-temurin-17
+FROM eclipse-temurin:17-jdk
 
 WORKDIR /app
 
 COPY . .
 
-# Build using Maven (NOT mvnw)
-RUN mvn clean package -DskipTests
+RUN chmod +x mvnw
+RUN ./mvnw clean package -DskipTests
 
-# Run app
 CMD ["java", "-jar", "target/*.jar"]
