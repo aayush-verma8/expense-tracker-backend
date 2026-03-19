@@ -2,6 +2,11 @@ FROM openjdk:17
 
 WORKDIR /app
 
-COPY target/*.jar app.jar
+# Copy all project files
+COPY . .
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Build the project
+RUN ./mvnw clean package -DskipTests
+
+# Run the jar
+CMD ["java", "-jar", "target/*.jar"]
