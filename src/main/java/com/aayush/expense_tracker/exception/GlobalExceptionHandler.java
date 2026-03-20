@@ -24,12 +24,16 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleException(Exception ex) {
-
         Map<String, Object> error = new HashMap<>();
         error.put("timestamp", LocalDateTime.now());
-        error.put("message", "Something went wrong");
-        error.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
 
+        // CHANGE THIS LINE to see the real error
+        error.put("message", ex.getMessage() != null ? ex.getMessage() : "No message available");
+
+        // Also add the type of exception to be even more precise
+        error.put("error_type", ex.getClass().getSimpleName());
+
+        error.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
